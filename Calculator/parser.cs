@@ -124,6 +124,7 @@ public class Parser {
     return (expression, parse.tail);
   }
   public static (Lang.Expression expression, string tail) parseComplex(Lang.Expression inExpression, string a){
+    // Add simple expression, and recurse with parsing the right-hand arguments until the tail is gone.
     var parse = parseRight(inExpression, a);
     if (parse.tail!=""){
       parse = parseComplex(parse.expression, parse.tail);
