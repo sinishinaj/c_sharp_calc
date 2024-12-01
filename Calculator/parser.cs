@@ -27,21 +27,53 @@ public class Parser {
     }
     return false;
   }
-  public static bool isOperand(char a){
+  public static bool isOperand(string a){
     switch(a){
-      case '+':
+      case "+":
+        return true;
+      case "add":
+        return true;
+      case "plus":
         return true;
     }
     return false;
   }
-  public static string cleanExpression(string a){
-    string pure = "";
+  public static (bool operand, int index) identifyOperand(string a){
+    string operand = "";
     for (int ci = 0; ci < a.Length; ci++) 
     {
-      if (isDigit(a[ci]) || isOperand(a[ci])){
-        pure+=a[ci];
-      } 
+      operand += a[ci];
+      if (isOperand(operand)){
+        return (true, ci);
+      }
     }
+    return (false, 0);
+  }
+  public static string cleanExpression(string a){
+    string noSpaces = "";
+    string pure = "";
+    // First we remove all spaces.
+    for (int ci = 0; ci < a.Length; ci++) 
+    {
+      if (a[ci]!=' '){
+        noSpaces+=a[ci];
+      }
+    }
+    // We identify the digits, and the operands.
+    for (int ci = 0; ci < a.Length; ci++) 
+    {
+      if (isDigit(a[ci])){
+        pure+=a[ci];
+      } else {
+        string b = a.Remove(0,ci);
+        var operand = identifyOperand(b);
+        if (operand.operand == true){
+          ci+=operand.index;
+          pure+=b.Remove(operand.index+1);
+        }
+      }
+    }
+    // We return the clean expression.
     return pure;
   }
   public static (string digits, string tail) parseDigits(string a){
@@ -57,6 +89,11 @@ public class Parser {
       digits+=a[ci];
     }
     return (digits, tail);
+  }
+  public static Lang.Num constructNum(int a){
+    Lang.Num b = new Lang.Num();
+    b.a = a;
+    return b;
   }
 	public static (Lang.Expression expression, string tail) parseSimple(string a){
     Lang.Expression expression = new Lang.Expression();
@@ -74,8 +111,9 @@ public class Parser {
   }
   public static (Lang.Expression expression, string tail) parseRight(Lang.Expression leftExp, string a){
     Lang.Expression expression = new Lang.Expression();
-    // Read right number, and cut-off operand.
-    a = a.Remove(0,1);
+    // Discard operand, and construct right number.
+    var operand = identifyOperand(a);
+    a = a.Remove(0,operand.index+1);
     var parse = parseDigits(a);
     Lang.Num rightNum = constructNum(int.Parse(parse.digits));
     // Construct expression.
@@ -92,11 +130,6 @@ public class Parser {
       return (parse.expression, parse.tail);
     }
     return (parse.expression, "");
-  }
-  public static Lang.Num constructNum(int a){
-    Lang.Num b = new Lang.Num();
-    b.a = a;
-    return b;
   }
   public static Lang.Expression parseExpression(string a){
     Lang.Expression expression = new Lang.Expression();
