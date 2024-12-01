@@ -1,12 +1,10 @@
-﻿using System.Linq.Expressions;
-
-namespace Calculator
+﻿namespace Calculator
 {
   class Program
   {
     public static void Main(string[] args)
     {
-      int eval = Lang.evalExpression(constructComplex());
+      int eval = Lang.evalExpression(Parser.parseExpression("   2 + 3   + 4  +   5   + 6 +    7 "));
       Console.WriteLine("The result is " + eval);
     }
     public static Lang.Expression constructSimple(){

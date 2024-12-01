@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/gelati/C#Calc/Calculator/Calculator.csproj": {}
+    "/home/gelati/c_sharp_calc/Calculator/Calculator.csproj": {}
   },
   "projects": {
-    "/home/gelati/C#Calc/Calculator/Calculator.csproj": {
+    "/home/gelati/c_sharp_calc/Calculator/Calculator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/gelati/C#Calc/Calculator/Calculator.csproj",
+        "projectUniqueName": "/home/gelati/c_sharp_calc/Calculator/Calculator.csproj",
         "projectName": "Calculator",
-        "projectPath": "/home/gelati/C#Calc/Calculator/Calculator.csproj",
+        "projectPath": "/home/gelati/c_sharp_calc/Calculator/Calculator.csproj",
         "packagesPath": "/home/gelati/.nuget/packages/",
-        "outputPath": "/home/gelati/C#Calc/Calculator/obj/",
+        "outputPath": "/home/gelati/c_sharp_calc/Calculator/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/gelati/.nuget/NuGet/NuGet.Config"
