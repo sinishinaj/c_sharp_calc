@@ -1,10 +1,14 @@
-﻿namespace Calculator
+﻿using System.ComponentModel;
+using System.Globalization;
+using System.Linq.Expressions;
+
+namespace Calculator
 {
   class Program
   {
     public static void Main(string[] args)
     {
-      int eval = Lang.evalExpression(Parser.parseExpression("   2    add    3 +4 plus 60 add    5"));
+      string eval = Parser.parseExpression("    2 add 2    add 2     add 3     ");
       Console.WriteLine("The result is " + eval);
     }
   }

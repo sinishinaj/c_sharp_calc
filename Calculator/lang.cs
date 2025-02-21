@@ -1,33 +1,48 @@
-public class Lang {
-	public class Expression {
-		public Abstract a;
-	}
-	public abstract class Abstract{
-		abstract public string Tag { get; }
-	}
-	public class Num : Abstract {
-		public override string Tag
+public static class Lang {	
+
+	//public struct Option<T>
+	/* {
+		public static Option<T> None => default;
+		public static Option<T> Some(T value) => new Option<T>(value);
+
+		readonly bool isSome;
+		readonly T value;
+
+		Option(T value)
 		{
-			get { return "Num"; }
+				this.value = value;
+				isSome = this.value is { };
 		}
-		public int a;
-	}
-	public class Add : Abstract {
-		public override string Tag
+
+		public bool IsSome(out T value)
 		{
-			get { return "Add"; }
+				value = this.value;
+				return isSome;
 		}
-		public Expression a = new Expression();
-		public Expression b = new Expression();
+	} */
+	public class Num : Expression {
+		public string tag {get{ return "Num";}}
+		public int number {get; init;}
 	}
-	public static int evalExpression(Expression a){
-		switch (a.a.Tag) {
+	public class Add : Expression {
+		public string tag {get{ return "Add";}}
+		public Expression firstExpression {get; init;}
+		public Expression secondExpression {get; init;}
+	}
+
+	public interface Expression
+	{
+		public string tag { get;}
+	}
+
+	public static int evalExpression(Expression expression){
+		switch (expression.tag) {
 			case "Num":
-				Num num = (Num)a.a;
-				return num.a;
+				Num num = (Num)expression;
+				return num.number;
 			case "Add":
-				Add add = (Add)a.a;
-				return evalExpression(add.a) + evalExpression(add.b);
+				Add add = (Add)expression;
+				return evalExpression(add.firstExpression) + evalExpression(add.secondExpression);
 			default:
 				return -405;
 		};
